@@ -303,13 +303,9 @@ class UsersController extends AbstractController {
                 $_POST['password'] ?? null, 
                 $_POST['user_access_level'] ?? 3,
             );
-            $id = $this->core->getQueries()->addUser($user_data);
-            if ($id !== null) {
-                return JsonResponse::getSuccessResponse($id);
-            }
-            else {
-                return JsonResponse::getErrorResponse('An error has occured.');
-            }
+
+            $new_user = new User($this->core, $user_data);
+            $this->core->getQueries()->insertSubmittyUser($new_user);
         } else { 
             return JsonResponse::getErrorResponse('All required keys are not present');
         }
