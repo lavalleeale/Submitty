@@ -276,51 +276,41 @@ class UsersController extends AbstractController {
         $this->core->getOutput()->renderJsonSuccess($user_information);
     }
 
-   /**
-     * @return JsonResponse
-     * @Route("/api/users/add", methods={"POST"})
-     */
-    function ajaxAddUser(): JsonResponse {
+    #[Route("/api/{semester}/{course}/users/add", methods: ["POST"])]
+    function ajaxAddUserCourse(string $semester, string $course): JsonResponse {
         $values = [
-            'user_id',
-            'numeric_id',
-            'given_name',
-            'family_name'
+                'user_id',
+                'user_numeric_id',
+                'user_pronouns',
+                'user_givenname',
+                'user_familyname',
+                'user_email',
+                'user_email_secondary',
+                'user_numeric_id',
+                'display_pronouns',
+                'registered_section',
+                'rotating_section',
+                'user_group',
+                'edit_user',
         ];
-        if (FileUtils::arrayKeysExist($values, array_keys($_POST))) {
-            $user = $this->core->getQueries()->getUserById($_POST['user_id']);
-            if ($user !== null){
-                return JsonResponse::getErrorResponse('User already exists!');
-            }
-            $user_data = array(
-                $_POST['user_id'],
-                $_POST['numeric_id'],
-                $_POST['given_name'],
-                $_POST['preferred_given_name'] ?? null,
-                $_POST['family_name'],
-                $_POST['preferred_family_name'] ?? null,
-                $_POST['email'] ?? '', 
-                $_POST['password'] ?? null, 
-                $_POST['user_access_level'] ?? 3,
-            );
-
-            $new_user = new User($this->core, $user_data);
-            $this->core->getQueries()->insertSubmittyUser($new_user);
-        } else { 
-            return JsonResponse::getErrorResponse('All required keys are not present');
+        if (!FileUtils::arrayKeysExist($values, array_keys($_POST))) {
+            return JsonResponse::getErrorResponse('All required keys are not present', ['required_keys' => $values]);
         }
+        $user = $this->core->getQueries()->getUserById($_POST['user_id']);
+        if ($user !== null){
+            return JsonResponse::getErrorResponse('User already exists!');
+        }
+        $this->updateUser($semester, $course, $type);
     }
 
     /**
-     * @Route("/courses/{_semester}/{_course}/users", methods={"POST"})
+     * @Route("/courses/{semester}/{course}/users", methods={"POST"})
      */
-    public function updateUser($type = 'users') {
+    public function updateUser(string $semester, string $course, $type = 'users') {
         $return_url = $this->core->buildCourseUrl([$type]) . '#user-' . $_POST['user_id'];
         $authentication = $this->core->getAuthentication();
         $use_database = $authentication instanceof DatabaseAuthentication;
         $_POST['user_id'] = trim($_POST['user_id']);
-        $semester = $this->core->getConfig()->getTerm();
-        $course = $this->core->getConfig()->getCourse();
 
         if (empty($_POST['user_id'])) {
             $this->core->addErrorMessage("User ID cannot be empty");
