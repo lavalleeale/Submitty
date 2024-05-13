@@ -392,7 +392,9 @@ class Gradeable extends AbstractModel {
         }
 
         $this->setActiveGradeInquiriesCount($details['active_grade_inquiries_count'] ?? 0);
-
+        if ($details['automatically_submit_on_due_date']) {
+            $this->createSubmitCronJob($details);
+        }
         // Set dates last
         $this->setDates($details);
         $this->modified = false;

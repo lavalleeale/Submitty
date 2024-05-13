@@ -1066,7 +1066,8 @@ class AdminGradeableController extends AbstractController {
                 'depends_on' => null,
                 'depends_on_points' => null,
                 'has_due_date' => $details['has_due_date'] ?? true,
-                'has_release_date' => $details['has_release_date'] ?? true
+                'has_release_date' => $details['has_release_date'] ?? true,
+                'automatically_submit_due_date' => true
             ]);
         }
         else {
@@ -1083,7 +1084,8 @@ class AdminGradeableController extends AbstractController {
                 'peer_grading' => false,
                 'peer_grade_set' => 0,
                 'late_submission_allowed' => $details['late_submission_allowed'] ?? true,
-                'hidden_files' => ""
+                'hidden_files' => "",
+                'automatically_submit_on_due_date' => true
             ]);
         }
 
