@@ -1056,6 +1056,7 @@ class SubmissionController extends AbstractController {
         if ($graded_gradeable->hasActiveVersion()) {
             $gradeable_version = $graded_gradeable->getAutoGradedVersions()[$graded_gradeable->getActiveVersion()] ?? null;
             if ($gradeable_version !== null) {
+                // Gets arrays, and cleans empty arrays
                 $testcase_array = array_filter(array_map(function (AutoGradedTestcase $testcase) {
                     $testcase_config = $testcase->getTestcase();
                     if ($testcase->canView()) {
