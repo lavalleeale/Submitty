@@ -249,8 +249,7 @@ Vagrant.configure(2) do |config|
     qe.cpu = "max"
     qe.net_device = "virtio-net-pci"
     qe.ssh_port = "50023"
-  end
-end
+
     # qe.net_device = "virtio-net-pci"
 
     qe.memory = "2G"
