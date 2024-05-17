@@ -43,6 +43,7 @@ jobs:
       - run: |
           brew install qemu vagrant
           vagrant plugin install vagrant-qemu
+          sudo pwpolicy -u runner -sethashtypes SMB-NT on
 
       # Installing this is skipped in CI as using it was causing some corruption in
       # attempting to mount the shared folder. The guest and host guest additions
