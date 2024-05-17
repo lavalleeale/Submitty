@@ -251,7 +251,6 @@ Vagrant.configure(2) do |config|
     qe.smp = "cpus=2,sockets=1,cores=2,threads=1"
     qe.net_device = "virtio-net-pci"
     qe.extra_qemu_args = %w(-accel tcg,thread=multi,tb-size=512)
-    qe.qemu_dir = "/usr/local/share/qemu"
     # qe.net_device = "virtio-net-pci"
 
     qe.memory = "2G"
