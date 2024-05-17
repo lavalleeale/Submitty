@@ -208,8 +208,7 @@ function handleUploadBanner(closeTime, releaseTime, extraName, linkName) {
                 }
             }
             catch (e) {
-                alert('Error parsing response from server. Please copy the contents of your Javascript Console and ' +
-                    'send it to an administrator, as well as what you were doing and what files you were uploading. - [handleUploadCourseMaterials]');
+                alert('Failed to upload a banner!');
                 console.log(data);
             }
         },
@@ -437,18 +436,19 @@ function addLabel(filename, filesize, part, previous) {
         e.stopPropagation();
         this.style.color = 'var(--text-black)';
     };
-    // remove file and label-row in table on click event
-    fileTrashElement.onclick = function(e) {
-        e.stopPropagation();
-        this.parentNode.parentNode.removeChild(this.parentNode);
-        deleteSingleFile(filename, part, previous);
-    };
 
-    // FOR VPAT if trash can has focus and key is pressed it will delete item
-    fileTrashElement.onkeypress = function(e) {
+    // onclick : remove file and label-row in table on click event
+    // onkeypress : FOR VPAT if trash can has focus and key is pressed it will delete item
+    fileTrashElement.onclick = fileTrashElement.onkeypress = function(e) {
         e.stopPropagation();
         this.parentNode.parentNode.removeChild(this.parentNode);
         deleteSingleFile(filename, part, previous);
+
+        const textArea = document.querySelector(`#reply_box_${part}`);
+        if (textArea) {
+            // Dispatch input event on existing forum textarea to disable forum reply button on empty input or no remaining files
+            textArea.dispatchEvent(new Event('input', { bubbles: false, cancelable: false }));
+        }
     };
 
     // adding the file in `table` in the parent div
@@ -496,8 +496,7 @@ function isValidSubmission() {
     }
 
     // If is_notebook is set then always valid submission
-    // eslint-disable-next-line no-prototype-builtins
-    if (window.hasOwnProperty('is_notebook')) {
+    if (Object.prototype.hasOwnProperty.call(window, 'is_notebook')) {
         return true;
     }
 
