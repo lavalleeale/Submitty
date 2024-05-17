@@ -241,22 +241,22 @@ Vagrant.configure(2) do |config|
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
       if apple_silicon
-        override.vm.box = base_boxes[:arm_mac_qemu]
+        override.vm.box = "generic/ubuntu2204"
       end
     end
-
     qe.arch = "x86_64"
     qe.machine = "q35"
     qe.cpu = "max"
-    qe.smp = "cpus=2,sockets=1,cores=2,threads=1"
     qe.net_device = "virtio-net-pci"
-    qe.extra_qemu_args = %w(-accel tcg,thread=multi,tb-size=512)
+    qe.ssh_port = "50023"
+  end
+end
     # qe.net_device = "virtio-net-pci"
 
     qe.memory = "2G"
     qe.smp = 2
 
-    qe.ssh_port = ENV.fetch('VM_PORT_SSH', 2222)
+    qe.ssh_port = ENV.fetch('VM_PORT_SSH', 50022)
 
     mount_folders(override, [])
   end
