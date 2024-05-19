@@ -241,7 +241,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
       if apple_silicon
-        override.vm.box = "generic/ubuntu2204"
+        override.vm.box = "bento/ubuntu-22.04"
       end
     end
     qe.arch = "x86_64"
