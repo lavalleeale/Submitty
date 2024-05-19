@@ -241,14 +241,13 @@ Vagrant.configure(2) do |config|
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
       if apple_silicon
-        override.vm.box = "bento/ubuntu-22.04"
+        override.vm.box =  base_boxes[:arm_mac_qemu]
       end
     end
     qe.arch = "x86_64"
     qe.machine = "q35"
     qe.cpu = "max"
     qe.net_device = "virtio-net-pci"
-    qe.ssh_port = "50023"
 
     # qe.net_device = "virtio-net-pci"
 
