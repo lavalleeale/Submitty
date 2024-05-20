@@ -7,7 +7,8 @@ Vagrant.configure("2") do |config|
       # qe.cpu = "max"
       # qe.smp = "cpus=2,sockets=1,cores=2,threads=1"
       # qe.net_device = "virtio-net-pci"
-      qe.extra_qemu_args = %w(-accel=tcg,thread=multi,tb-size=512)
+      qe.machine = "virt,accel=tcg,highmem=off"
+      qe.extra_qemu_args = %w(thread=multi,tb-size=512)
       # qe.qemu_dir = "/usr/local/share/qemu"
     end
   end
