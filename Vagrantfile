@@ -242,12 +242,12 @@ Vagrant.configure(2) do |config|
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
       if apple_silicon
-        override.vm.box = "generic/ubuntu2204"
+        override.vm.box = base_boxes[:arm_mac_qemu] 
       end
     end
-    qe.arch = "x86_64"
-    qe.machine = "q35"
-    qe.cpu = "max"
+    # qe.arch = "x86_64"
+    # qe.machine = "q35"
+    # qe.cpu = "max"
     qe.net_device = "virtio-net-pci"
 
     # qe.net_device = "virtio-net-pci"
