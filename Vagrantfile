@@ -249,7 +249,7 @@ Vagrant.configure(2) do |config|
     # qe.machine = "q35"
     # qe.cpu = "max"
     qe.net_device = "virtio-net-pci"
-
+    qe.machine =  "virt,accel=tcg,highmem=on"
     # qe.net_device = "virtio-net-pci"
 
     qe.memory = "2G"
