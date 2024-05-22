@@ -62,8 +62,12 @@ jobs:
           fetch-depth: 0
       - name: Install virtualbox and vagrant
         run: |
-          brew install qemu vagrant
-          vagrant plugin install vagrant-qemu
+
+          brew install qemu vagrant akirakyle/qemu-virgl/qemu-virgl
+          git clone https://github.com/billyan2018/vagrant-qemu
+          rake build && vagrant plugin install pkg/vagrant-qemu-0.2.22.gem
+          
+          # vagrant plugin install vagrant-qemu
       # - name: Get latest version
       #   id: get-version
       #   run: |
