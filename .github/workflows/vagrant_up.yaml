@@ -46,7 +46,6 @@ jobs:
           sudo systemctl start libvirtd
           # sudo pwpolicy -u runner -sethashtypes SMB-NT on
           vagrant plugin install vagrant-libvirt
-          vagrant plugin install vagrant-disksize
           sudo su
           sudo vagrant up --provider=libvirt
       # Installing this is skipped in CI as using it was causing some corruption in
