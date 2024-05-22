@@ -50,7 +50,9 @@ jobs:
       # attempting to mount the shared folder. The guest and host guest additions
       # versions are close enough that we are fine without it.
       # - run: vagrant plugin install vagrant-vbguest
-      - run: vagrant up --provider=libvirt
+      - run: |
+          sudo su
+          vagrant up --provider=libvirt
       - name: Validate image
         run: curl --show-error --fail --include http://localhost:1511
       # - name: Acquire Job ID
