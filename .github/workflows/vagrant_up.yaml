@@ -47,7 +47,7 @@ jobs:
           # sudo pwpolicy -u runner -sethashtypes SMB-NT on
           vagrant plugin install vagrant-libvirt
           sudo su
-          vagrant up --provider=libvirt
+          sudo vagrant up --provider=libvirt
       # Installing this is skipped in CI as using it was causing some corruption in
       # attempting to mount the shared folder. The guest and host guest additions
       # versions are close enough that we are fine without it.
