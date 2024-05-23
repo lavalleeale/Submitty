@@ -248,7 +248,7 @@ Vagrant.configure(2) do |config|
     qe.qemu_dir = "/usr/local/share/qemu"
     qe.machine = 'virt,accel=tcg,highmem=on'
     qe.cpu="cortex-a53"
-
+    config.vm.boot_timeout = 600
     qe.memory = "2G"
     qe.smp = 2
 
