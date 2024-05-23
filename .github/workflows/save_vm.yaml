@@ -65,9 +65,8 @@ jobs:
           brew install qemu vagrant
           vagrant plugin install vagrant-qemu
           sudo pwpolicy -u runner -sethashtypes SMB-NT on
-          softwareupdate -l
           rm ./Vagrantfile
-          mv aaa Vagrantfile
+          mv qemu_vagrant_file Vagrantfile
       # - name: Get latest version
       #   id: get-version
       #   run: |
