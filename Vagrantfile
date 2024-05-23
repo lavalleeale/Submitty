@@ -240,7 +240,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
-      if apple_silicon
+      if apple_silicon || ON_CI
         override.vm.box = base_boxes[:arm_mac_qemu]
       end
     end
