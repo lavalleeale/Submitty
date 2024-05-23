@@ -83,15 +83,15 @@ def mount_folders(config, mount_options)
   # vagrant group so that they can write to this shared folder, primarily just for the log files
   owner = 'root'
   group = 'vagrant'
-  config.vm.synced_folder '.', '/usr/local/submitty/GIT_CHECKOUT/Submitty', create: true, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: `whoami`.chomp, smb_password: `whoami`.chomp
+  config.vm.synced_folder '.', '/usr/local/submitty/GIT_CHECKOUT/Submitty', create: true, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: 'runner', smb_password: 'runner'
 
-  optional_repos = %w(AnalysisTools AnalysisToolsTS Lichen RainbowGrades Tutorial CrashCourseCPPSyntax LichenTestData)
-  optional_repos.each {|repo|
-    repo_path = File.expand_path("../" + repo)
-    if File.directory?(repo_path)
-      config.vm.synced_folder repo_path, "/usr/local/submitty/GIT_CHECKOUT/" + repo, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: `whoami`.chomp, smb_password: `whoami`.chomp
-    end
-  }
+  # optional_repos = %w(AnalysisTools AnalysisToolsTS Lichen RainbowGrades Tutorial CrashCourseCPPSyntax LichenTestData)
+  # optional_repos.each {|repo|
+  #   repo_path = File.expand_path("../" + repo)
+  #   if File.directory?(repo_path)
+  #     config.vm.synced_folder repo_path, "/usr/local/submitty/GIT_CHECKOUT/" + repo, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: `whoami`.chomp, smb_password: `whoami`.chomp
+  #   end
+  # }
 end
 
 def get_workers()
@@ -252,7 +252,7 @@ Vagrant.configure(2) do |config|
     qe.memory = "2G"
     qe.smp = 2
 
-    qe.ssh_port = ENV.fetch('VM_PORT_SSH', 2222)
+    # qe.ssh_port = ENV.fetch('VM_PORT_SSH', 2222)
 
     mount_folders(override, [])
   end
