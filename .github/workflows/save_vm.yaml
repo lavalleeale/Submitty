@@ -66,6 +66,8 @@ jobs:
           vagrant plugin install vagrant-qemu
           sudo pwpolicy -u runner -sethashtypes SMB-NT on
           softwareupdate -l
+          rm ./Vagrantfile
+          mv aaa Vagrantfile
       # - name: Get latest version
       #   id: get-version
       #   run: |
