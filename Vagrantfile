@@ -83,7 +83,7 @@ def mount_folders(config, mount_options)
   # vagrant group so that they can write to this shared folder, primarily just for the log files
   owner = 'root'
   group = 'vagrant'
-  config.vm.synced_folder '.', '/usr/local/submitty/GIT_CHECKOUT/Submitty', create: true, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: `whoami`.chomp, smb_password: `whoami`.chomp 
+  config.vm.synced_folder '.', '/usr/local/submitty/GIT_CHECKOUT/Submitty', create: true, owner: owner, group: group, mount_options: mount_options, smb_host: '10.0.2.2', smb_username: `whoami`.chomp
 
   optional_repos = %w(AnalysisTools AnalysisToolsTS Lichen RainbowGrades Tutorial CrashCourseCPPSyntax LichenTestData)
   optional_repos.each {|repo|
@@ -241,9 +241,10 @@ Vagrant.configure(2) do |config|
   config.vm.provider "qemu" do |qe, override|
     unless custom_box
       if apple_silicon
-        override.vm.box = base_boxes[:arm_mac_qemu] 
+        override.vm.box = base_boxes[:arm_mac_qemu]
       end
     end
+
     qe.qemu_dir = "/usr/local/share/qemu"
     qe.machine = 'virt,accel=tcg,highmem=on'
     qe.cpu="cortex-a53"
@@ -251,7 +252,7 @@ Vagrant.configure(2) do |config|
     qe.memory = "2G"
     qe.smp = 2
 
-    qe.ssh_port = ENV.fetch('VM_PORT_SSH', 50022)
+    qe.ssh_port = ENV.fetch('VM_PORT_SSH', 2222)
 
     mount_folders(override, [])
   end
