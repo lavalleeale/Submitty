@@ -75,7 +75,7 @@ jobs:
       #     fi
       #     echo "version=${TAG:1}" >> $GITHUB_OUTPUT
       - name: Vagrant Up
-        run: VAGRANT_DISABLE_SMBMFSYMLINKS=1 CI=1 vagrant up --provider=qemu
+        run: sudo VAGRANT_DISABLE_SMBMFSYMLINKS=1 CI=1 vagrant up --provider=qemu
       - name: Validate image
         run: curl --show-error --fail --include http://localhost:1511
       - name: Save image
