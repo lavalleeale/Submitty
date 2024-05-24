@@ -8,7 +8,7 @@ def gen_script()
     DISTRO=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
     VERSION=$(lsb_release -sr | tr '[:upper:]' '[:lower:]')
     mkdir -p ${GIT_PATH}/.vagrant/logs
-    cd /usr/local/submitty/GIT_CHECKOUT/Submitty
+    cd /usr/local/submitty/GIT_CHECKOUT
     git clone https://github.com/Submitty/Submitty.git
     #{setup_cmd}
 SCRIPT
