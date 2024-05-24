@@ -87,7 +87,7 @@ jobs:
       - name: Acquire Job ID
         if: failure()
         run: |
-          dmesg
+          sudo dmesg
       # - name: Publish image
       #   run: |
       #     vagrant cloud auth login --token ${{ secrets.VAGRANT_CLOUD_TOKEN }}
