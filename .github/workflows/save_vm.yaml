@@ -67,7 +67,7 @@ jobs:
           sudo pwpolicy -u runner -sethashtypes SMB-NT on
           rm ./Vagrantfile
           mv qemu_vagrant_file Vagrantfile
-          echo "Cmnd_Alias VAGRANT_SMB_ADD = /usr/sbin/sharing -a * -S * -s * -g * -n *
+          sudo echo "Cmnd_Alias VAGRANT_SMB_ADD = /usr/sbin/sharing -a * -S * -s * -g * -n *
                 Cmnd_Alias VAGRANT_SMB_REMOVE = /usr/sbin/sharing -r *
                 Cmnd_Alias VAGRANT_SMB_LIST = /usr/sbin/sharing -l
                 Cmnd_Alias VAGRANT_SMB_PLOAD = /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.smb.preferences.plist
