@@ -43,6 +43,7 @@ jobs:
       - run: |
           sudo apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils vagrant samba cifs-utils
           sudo systemctl enable --now libvirtd
+          sudo systemctl start libvirtd
           vagrant plugin install vagrant-libvirt
           vagrant up
       # Installing this is skipped in CI as using it was causing some corruption in
