@@ -78,21 +78,15 @@ jobs:
       #     echo "version=${TAG:1}" >> $GITHUB_OUTPUT
       - name: Vagrant Up
         run: sudo VAGRANT_DISABLE_SMBMFSYMLINKS=1 CI=1 vagrant up --provider=qemu
-      
-
       - name: Validate image
         run: curl --show-error --fail --include http://localhost:1511
       - name: Save image
         run: vagrant package --output submitty.box
-      - name: Acquire Job ID
-        if: failure()
+      - name: Publish image
         run: |
-          sudo dmesg
-      # - name: Publish image
-      #   run: |
-      #     vagrant cloud auth login --token ${{ secrets.VAGRANT_CLOUD_TOKEN }}
-      #     vagrant cloud publish SubmittyBot/ubuntu22-dev ${{ steps.get-version.outputs.version }}.$(date +"%y%m%d%H%M") virtualbox submitty.box --release --force
-      #     vagrant cloud auth logout
+          vagrant cloud auth login --token ${{ secrets.VAGRANT_CLOUD_TOKEN }}
+          vagrant cloud publish submitty_temp/ubuntu22-dev 155 qemu submitty.box --force
+          vagrant cloud auth logout
       # - name: Acquire Job ID
       #   if: failure()
       #   id: get-job-id
