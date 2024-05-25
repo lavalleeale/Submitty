@@ -164,17 +164,17 @@ class AuthenticationController extends AbstractController {
     public function getToken() {
         if (!isset($_POST['user_id']) || !isset($_POST['password'])) {
             $msg = 'Cannot leave user id or password blank';
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
         $this->core->getAuthentication()->setUserId($_POST['user_id']);
         $this->core->getAuthentication()->setPassword($_POST['password']);
         $token = $this->core->authenticateJwt();
         if ($token) {
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getSuccessResponse(['token' => $token]));
+            return JsonResponse::getSuccessResponse(['token' => $token]);
         }
         else {
             $msg = "Could not login using that user id or password";
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
     }
 
@@ -186,17 +186,17 @@ class AuthenticationController extends AbstractController {
     public function invalidateToken() {
         if (!isset($_POST['user_id']) || !isset($_POST['password'])) {
             $msg = 'Cannot leave user id or password blank';
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
         $this->core->getAuthentication()->setUserId($_POST['user_id']);
         $this->core->getAuthentication()->setPassword($_POST['password']);
         $success = $this->core->invalidateJwt();
         if ($success) {
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getSuccessResponse());
+            return JsonResponse::getSuccessResponse();
         }
         else {
             $msg = "Could not login using that user id or password";
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
     }
 
@@ -220,7 +220,7 @@ class AuthenticationController extends AbstractController {
             || !$this->core->getConfig()->isCourseLoaded()
         ) {
             $msg = 'Missing value for one of the fields';
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
 
         $token_login_success = false;
@@ -241,18 +241,18 @@ class AuthenticationController extends AbstractController {
             $this->core->getAuthentication()->setPassword($_POST['password']);
             if ($this->core->getAuthentication()->authenticate() !== true) {
                 $msg = "Could not login using that user id or password";
-                return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+                return JsonResponse::getFailResponse($msg);
             }
         }
 
         $user = $this->core->getQueries()->getUserById($_POST['user_id']);
         if ($user === null) {
             $msg = "Could not find that user for that course";
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
         elseif ($user->accessFullGrading()) {
             $msg = "Successfully logged in as {$_POST['user_id']}";
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getSuccessResponse(['message' => $msg, 'authenticated' => true]));
+            return JsonResponse::getSuccessResponse(['message' => $msg, 'authenticated' => true]);
         }
 
         try {
@@ -265,16 +265,16 @@ class AuthenticationController extends AbstractController {
         if ($gradeable !== null && $gradeable->isTeamAssignment()) {
             if (!$this->core->getQueries()->getTeamById($_POST['id'])->hasMember($_POST['user_id'])) {
                 $msg = "This user is not a member of that team.";
-                return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+                return JsonResponse::getFailResponse($msg);
             }
         }
         elseif ($_POST['user_id'] !== $_POST['id']) {
             $msg = "This user cannot check out that repository.";
-            return MultiResponse::JsonOnlyResponse(JsonResponse::getFailResponse($msg));
+            return JsonResponse::getFailResponse($msg);
         }
 
         $msg = "Successfully logged in as {$_POST['user_id']}";
-        return MultiResponse::JsonOnlyResponse(JsonResponse::getSuccessResponse(['message' => $msg, 'authenticated' => true]));
+        return JsonResponse::getSuccessResponse(['message' => $msg, 'authenticated' => true]);
     }
 
     /**
