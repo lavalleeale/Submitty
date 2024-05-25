@@ -41,9 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-         sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-system virtinst bridge-utils vagrant
-          sudo systemctl enable libvirtd
-          sudo systemctl start libvirtd
+         sudo apt install qemu qemu-kvm vagrant
           # sudo pwpolicy -u runner -sethashtypes SMB-NT on
           vagrant plugin install vagrant-qemu
           sudo su
