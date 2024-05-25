@@ -18,7 +18,7 @@ SCRIPT
 end
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "perk/ubuntu-2204-arm64"  
+  config.vm.box = "bento/ubuntu-22.04-arm64"
   owner = 'root'
   group = 'vagrant'
   config.ssh.insert_key = false
