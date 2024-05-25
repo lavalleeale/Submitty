@@ -41,8 +41,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-         sudo apt install qemu libvirt-clients libvirt-daemon-system virtinst bridge-utils vagrant
-         sudo vagrant up --provider=libvirt
+          sudo apt-get -y install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+          sudo systemctl enable --now libvirtd
+          vagrant plugin install vagrant-libvirt
+          vagrant up
       # Installing this is skipped in CI as using it was causing some corruption in
       # attempting to mount the shared folder. The guest and host guest additions
       # versions are close enough that we are fine without it.
